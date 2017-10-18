@@ -1,0 +1,65 @@
+{
+	"listeners": [{
+		"name": "helloworld",
+		"address": "tcp://0.0.0.0:10000",
+		"filters": [{
+			"name": "http_connection_manager",
+			"config": {
+				"codec_type": "auto",
+				"stat_prefix": "ingress_http",
+				"route_config": {
+				  "virtual_hosts": [
+					{
+					  "name": "service",
+					  "domains": ["*"],
+					  "routes": [
+						{
+						  "timeout_ms": 0,
+						  "prefix": "/accounts",
+						  "cluster": "service1"
+						}, {
+						  "timeout_ms": 0,
+						  "prefix": "/service2",
+						  "cluster": "service2"
+						}
+					  ]
+					}
+				  ]
+				},
+				"filters": [
+				  {
+					"name": "router",
+					"config": {}
+				  }
+				]			
+			}
+		}]
+	}],
+	"admin": {
+		"access_log_path": "/dev/null",
+		"address": "tcp://0.0.0.0:9020"
+	},
+	"cluster_manager": {
+		"clusters" : [{
+			"name": "service1",
+			"type": "strict_dns",
+			"connect_timeout_ms": 5000,
+			"lb_type": "round_robin",
+			"hosts": [
+			  {
+				"url": "tcp://192.168.99.100:2222"
+			  }
+			]
+		}, {
+			"name": "service2",
+			"type": "strict_dns",
+			"connect_timeout_ms": 5000,
+			"lb_type": "round_robin",
+			"hosts": [
+			  {
+				"url": "tcp://127.0.0.1:3333"
+			  }
+			]
+		}]
+	}
+}
