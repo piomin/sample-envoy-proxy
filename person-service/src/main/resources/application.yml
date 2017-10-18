@@ -1,0 +1,6 @@
+server:  
+  port: ${port:9300}
+
+spring:  
+  application:
+    name: person-service

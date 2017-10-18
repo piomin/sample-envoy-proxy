@@ -1,0 +1,6 @@
+server:  
+  port: ${port:9200}
+
+spring:  
+  application:
+    name: envoy-discovery-service
