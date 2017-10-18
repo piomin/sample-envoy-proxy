@@ -27,6 +27,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>envoy-discovery</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
