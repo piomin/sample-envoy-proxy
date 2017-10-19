@@ -9,6 +9,7 @@
 	<modules>
 		<module>envoy-discovery</module>
 		<module>person-service</module>
+		<module>product-service</module>
 	</modules>
 
 </project>

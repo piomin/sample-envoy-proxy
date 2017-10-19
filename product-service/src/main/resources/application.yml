@@ -1,0 +1,6 @@
+server:  
+  port: ${port:9400}
+
+spring:  
+  application:
+    name: product-service
