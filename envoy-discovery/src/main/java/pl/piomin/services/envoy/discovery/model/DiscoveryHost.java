@@ -61,4 +61,9 @@ public class DiscoveryHost {
 		this.serviceRepoName = serviceRepoName;
 	}
 
+	@Override
+	public String toString() {
+		return "DiscoveryHost [ipAddress=" + ipAddress + ", port=" + port + "]";
+	}
+
 }

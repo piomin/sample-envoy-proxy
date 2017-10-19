@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +20,16 @@ import pl.piomin.services.envoy.discovery.model.DiscoveryHosts;
 @RestController
 public class EnvoyDiscoveryController {
 
+	private static final Logger LOGGER = Logger.getLogger("EnvoyDiscoveryController");
+	
 	private Map<String, List<DiscoveryHost>> hosts = new HashMap<>();
 	
-	@GetMapping("/v1/registration/{serviceName}")
+	@GetMapping(value = "/v1/registration/{serviceName}")
 	public DiscoveryHosts getHostsByServiceName(@PathVariable("serviceName") String serviceName) {
+		LOGGER.info("getHostsByServiceName: service=" + serviceName);
 		DiscoveryHosts hostsList = new DiscoveryHosts();
 		hostsList.setHosts(hosts.get(serviceName));
+		LOGGER.info("getHostsByServiceName: hosts=" + hostsList);
 		return hostsList;
 	}
 	

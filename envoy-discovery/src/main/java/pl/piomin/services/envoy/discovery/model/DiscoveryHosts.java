@@ -33,4 +33,9 @@ public class DiscoveryHosts {
 		this.service = service;
 	}
 
+	@Override
+	public String toString() {
+		return "DiscoveryHosts [hosts=" + hosts + "]";
+	}
+
 }
