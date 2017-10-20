@@ -31,7 +31,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>person-service</finalName>
+		<finalName>product-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

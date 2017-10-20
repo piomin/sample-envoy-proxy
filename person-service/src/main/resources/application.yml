@@ -1,15 +1,15 @@
 server:  
-  port: ${port:9300}
+  port: ${PORT:9300}
 
 spring:  
   application:
     name: person-service
 
 endpoints:
-    shutdown:
-      enabled: true
-      sensitive: false
+  shutdown:
+    enabled: true
+    sensitive: false
 
 envoy:
   discovery:
-    url: http://localhost:9200
+    url: ${DISCOVERY_URL:http://localhost:9200}

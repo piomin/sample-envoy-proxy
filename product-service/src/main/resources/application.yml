@@ -1,5 +1,5 @@
 server:  
-  port: ${port:9400}
+  port: ${PORT:9400}
 
 spring:  
   application:
@@ -12,4 +12,4 @@ endpoints:
 
 envoy:
   discovery:
-    url: http://localhost:9200
+    url: ${DISCOVERY_URL:http://localhost:9200}

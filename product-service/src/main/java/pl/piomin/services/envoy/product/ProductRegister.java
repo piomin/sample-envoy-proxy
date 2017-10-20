@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import pl.piomin.services.envoy.product.model.DiscoveryHost;
 import pl.piomin.services.envoy.product.model.DiscoveryHosts;
 
+@Service
 public class ProductRegister implements ApplicationListener<ApplicationReadyEvent> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductRegister.class);
