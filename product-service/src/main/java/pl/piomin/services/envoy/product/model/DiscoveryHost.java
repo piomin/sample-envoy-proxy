@@ -1,4 +1,4 @@
-package pl.piomin.services.envoy.person.model;
+package pl.piomin.services.envoy.product.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

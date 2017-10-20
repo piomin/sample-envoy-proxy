@@ -4,3 +4,12 @@ server:
 spring:  
   application:
     name: person-service
+
+endpoints:
+    shutdown:
+      enabled: true
+      sensitive: false
+
+envoy:
+  discovery:
+    url: http://localhost:9200

@@ -35,6 +35,7 @@ public class EnvoyDiscoveryController {
 	
 	@PostMapping("/v1/registration/{serviceName}")
 	public void addHost(@PathVariable("serviceName") String serviceName, @RequestBody DiscoveryHost host) {
+		LOGGER.info("addHost: service=" + serviceName + ", body=" + host);
 		List<DiscoveryHost> tmp = hosts.get(serviceName);
 		if (tmp == null)
 			tmp = new ArrayList<>();
@@ -44,6 +45,7 @@ public class EnvoyDiscoveryController {
 	
 	@DeleteMapping("/v1/registration/{serviceName}/{ipAddress}")
 	public void deleteHost(@PathVariable("serviceName") String serviceName, @PathVariable("ipAddress") String ipAddress) {
+		LOGGER.info("deleteHost: service=" + serviceName + ", ip=" + ipAddress);
 		List<DiscoveryHost> tmp = hosts.get(serviceName);
 		if (tmp != null) {
 			Optional<DiscoveryHost> optHost = tmp.stream().filter(it -> it.getIpAddress().equals(ipAddress)).findFirst();
