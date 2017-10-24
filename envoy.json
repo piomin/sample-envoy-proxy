@@ -2,6 +2,9 @@
     "listeners": [{
         "address": "tcp://0.0.0.0:10000",
 		"filters": [{
+			"tracing": {
+				"operation_name": "ingress"
+			},
             "name": "http_connection_manager",
             "config": {
                 "codec_type": "auto",
@@ -14,10 +17,16 @@
                         ],
                         "routes": [{
                             "prefix": "/person",
-                            "cluster": "service11"
+                            "cluster": "service11",
+                            "decorator": {
+								"operation": "person"
+							}
                         }, {
 						    "prefix": "/product",
-                            "cluster": "service12"
+                            "cluster": "service12",
+                            "decorator": {
+								"operation": "product"
+							}
 						}]
                     }]
                 },
