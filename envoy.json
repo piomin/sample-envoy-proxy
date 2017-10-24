@@ -2,11 +2,11 @@
     "listeners": [{
         "address": "tcp://0.0.0.0:10000",
 		"filters": [{
-			"tracing": {
-				"operation_name": "ingress"
-			},
             "name": "http_connection_manager",
             "config": {
+            	"tracing": {
+					"operation_name": "ingress"
+				},
                 "codec_type": "auto",
                 "stat_prefix": "ingress_http",
                 "route_config": {
