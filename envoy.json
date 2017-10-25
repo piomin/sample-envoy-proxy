@@ -17,13 +17,13 @@
                         ],
                         "routes": [{
                             "prefix": "/person",
-                            "cluster": "service11",
+                            "cluster": "service1",
                             "decorator": {
 								"operation": "person"
 							}
                         }, {
 						    "prefix": "/product",
-                            "cluster": "service12",
+                            "cluster": "service2",
                             "decorator": {
 								"operation": "product"
 							}
@@ -54,13 +54,13 @@
     },
     "cluster_manager": {
 		"clusters": [{
-			"name": "service11",
+			"name": "service1",
 			"type": "sds",
 			"connect_timeout_ms": 5000,
 			"lb_type": "round_robin",
 			"service_name": "person-service"
 		}, {
-			"name": "service12",
+			"name": "service2",
 			"type": "sds",
 			"connect_timeout_ms": 5000,
 			"lb_type": "round_robin",
@@ -78,7 +78,7 @@
 		}],
 		"sds": {
 			"cluster": {
-				"name": "service1",
+				"name": "service_discovery",
 				"type": "strict_dns",
 				"connect_timeout_ms": 5000,
 				"lb_type": "round_robin",
