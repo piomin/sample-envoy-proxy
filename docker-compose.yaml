@@ -1,0 +1,50 @@
+version: "3"
+
+volumes:
+    envoy_data: {}
+    
+services:
+    envoy:
+        build: ./envoy
+        expose:
+            - 9901
+            - 10000
+        ports:
+            - 9901:9901
+            - 10000:10000
+            
+    service-discovery:
+        build: ./envoy-discovery
+        expose:
+            - 9200
+        ports:
+            - 9200
+        depends_on:
+            - envoy
+            
+    person-service:
+        build: ./person-service
+        expose:
+            - 9300
+        ports:
+            - 9300
+        depends_on:
+            - service-discovery
+            
+    product-service:
+        build: ./product-service
+        expose:
+            - 9200
+        ports:
+            - 9200
+        depends_on:
+            - service-discovery
+            
+    zipkin-service:
+        image: openzipkin/zipkin
+        expose:
+            - 9411
+        ports:
+            - 9411
+        depends_on:
+            - envoy
