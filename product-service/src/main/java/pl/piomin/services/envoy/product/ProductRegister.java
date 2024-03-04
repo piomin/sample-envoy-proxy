@@ -19,41 +19,41 @@ import pl.piomin.services.envoy.product.model.DiscoveryHosts;
 @Service
 public class ProductRegister implements ApplicationListener<ApplicationReadyEvent> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductRegister.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductRegister.class);
 
-	private String ip;
-	@Value("${server.port}")
-	private int port;
-	@Value("${spring.application.name}")
-	private String appName;
-	@Value("${envoy.discovery.url}")
-	private String discoveryUrl;
-	
-	@Autowired
-	RestTemplate template;
+    private String ip;
+    @Value("${server.port}")
+    private int port;
+    @Value("${spring.application.name}")
+    private String appName;
+    @Value("${envoy.discovery.url}")
+    private String discoveryUrl;
 
-	@Override
-	public void onApplicationEvent(ApplicationReadyEvent event) {
-		LOGGER.info("ProductRegister.register");
-		try {
-			ip = InetAddress.getLocalHost().getHostAddress();
-			DiscoveryHost host = new DiscoveryHost();
-			host.setPort(port);
-			host.setIpAddress(ip);
-			template.postForObject(discoveryUrl + "/v1/registration/{service}", host, DiscoveryHosts.class, appName);
-		} catch (Exception e) {
-			LOGGER.error("Error during registration", e);
-		}
-	}
+    @Autowired
+    RestTemplate template;
 
-	@PreDestroy
-	public void destroy() {
-		try {
-			template.delete(discoveryUrl + "/v1/registration/{service}/{ip}/", appName, ip);
-			LOGGER.info("ProductRegister.unregistered: service={}, ip={}", appName, ip);
-		} catch (Exception e) {
-			LOGGER.error("Error during unregistration", e);
-		}
-	}
-	
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        LOGGER.info("ProductRegister.register");
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+            DiscoveryHost host = new DiscoveryHost();
+            host.setPort(port);
+            host.setIpAddress(ip);
+            template.postForObject(discoveryUrl + "/v1/registration/{service}", host, DiscoveryHosts.class, appName);
+        } catch (Exception e) {
+            LOGGER.error("Error during registration", e);
+        }
+    }
+
+    @PreDestroy
+    public void destroy() {
+        try {
+            template.delete(discoveryUrl + "/v1/registration/{service}/{ip}/", appName, ip);
+            LOGGER.info("ProductRegister.unregistered: service={}, ip={}", appName, ip);
+        } catch (Exception e) {
+            LOGGER.error("Error during unregistration", e);
+        }
+    }
+
 }

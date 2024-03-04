@@ -19,35 +19,35 @@ import pl.piomin.services.envoy.person.model.Person;
 @RequestMapping("/person")
 public class PersonController {
 
-	private List<Person> persons = new ArrayList<>();
+    private List<Person> persons = new ArrayList<>();
 
-	@GetMapping
-	public List<Person> findAll() {
-		return persons;
-	}
+    @GetMapping
+    public List<Person> findAll() {
+        return persons;
+    }
 
-	@GetMapping("/{id}")
-	public Person findById(@RequestParam("id") Long id) {
-		return persons.stream().filter(it -> it.getId().equals(id)).findFirst().get();
-	}
+    @GetMapping("/{id}")
+    public Person findById(@RequestParam("id") Long id) {
+        return persons.stream().filter(it -> it.getId().equals(id)).findFirst().get();
+    }
 
-	@PostMapping
-	public Person add(@RequestBody Person p) {
-		p.setId((long) (persons.size() + 1));
-		persons.add(p);
-		return p;
-	}
+    @PostMapping
+    public Person add(@RequestBody Person p) {
+        p.setId((long) (persons.size() + 1));
+        persons.add(p);
+        return p;
+    }
 
-	@DeleteMapping("/{id}")
-	public void delete(@RequestParam("id") Long id) {
-		List<Person> p = persons.stream().filter(it -> it.getId().equals(id)).collect(Collectors.toList());
-		persons.removeAll(p);
-	}
+    @DeleteMapping("/{id}")
+    public void delete(@RequestParam("id") Long id) {
+        List<Person> p = persons.stream().filter(it -> it.getId().equals(id)).collect(Collectors.toList());
+        persons.removeAll(p);
+    }
 
-	@PutMapping
-	public void update(@RequestBody Person p) {
-		Person person = persons.stream().filter(it -> it.getId().equals(p.getId())).findFirst().get();
-		persons.set(persons.indexOf(person), p);
-	}
+    @PutMapping
+    public void update(@RequestBody Person p) {
+        Person person = persons.stream().filter(it -> it.getId().equals(p.getId())).findFirst().get();
+        persons.set(persons.indexOf(person), p);
+    }
 
 }
