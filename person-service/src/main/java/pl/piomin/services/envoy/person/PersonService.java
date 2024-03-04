@@ -8,13 +8,13 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class PersonService {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PersonService.class, args).registerShutdownHook();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PersonService.class, args).registerShutdownHook();
+    }
 
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
     }
-    
+
 }
