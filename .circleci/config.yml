@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  analyze:
     docker:
       - image: 'cimg/openjdk:21.0.2'
     steps:
@@ -9,11 +9,39 @@ jobs:
       - run:
           name: Analyze on SonarCloud
           command: mvn verify sonar:sonar
+  integration-test:
+    executor: machine_executor_amd64
+    steps:
+      - checkout
+      - run:
+          name: Install OpenJDK 21
+          command: |
+            java -version
+            sudo apt-get update && sudo apt-get install openjdk-21-jdk
+            sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+            sudo update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-amd64/bin/javac
+            java -version
+            export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+      - run:
+          name: Build Image
+          command: mvn clean package -Pbuild-image
+      - run:
+          name: Docker Compose Up
+          command: docker compose up
+      - run:
+          name: Docker Compose Down
+          command: docker compose down
 
 executors:
   jdk:
     docker:
       - image: 'cimg/openjdk:21.0.2'
+  machine_executor_amd64:
+    machine:
+      image: ubuntu-2204:2023.10.1
+    environment:
+      architecture: "amd64"
+      platform: "linux/amd64"
 
 orbs:
   maven: circleci/maven@1.4.1
@@ -21,7 +49,8 @@ orbs:
 workflows:
   maven_test:
     jobs:
+      - integration-test
       - maven/test:
           executor: jdk
-      - build:
+      - analyze:
           context: SonarCloud

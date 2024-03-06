@@ -23,7 +23,7 @@ public class EnvoyDiscoveryController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnvoyDiscoveryController.class);
 
-    private Map<String, List<DiscoveryHost>> hosts = new HashMap<>();
+    private final Map<String, List<DiscoveryHost>> hosts = new HashMap<>();
 
     @GetMapping(value = "/v1/registration/{serviceName}")
     public DiscoveryHosts getHostsByServiceName(@PathVariable("serviceName") String serviceName) {
@@ -50,8 +50,7 @@ public class EnvoyDiscoveryController {
         List<DiscoveryHost> tmp = hosts.get(serviceName);
         if (tmp != null) {
             Optional<DiscoveryHost> optHost = tmp.stream().filter(it -> it.getIpAddress().equals(ipAddress)).findFirst();
-            if (optHost.isPresent())
-                tmp.remove(optHost.get());
+            optHost.ifPresent(tmp::remove);
             hosts.put(serviceName, tmp);
         }
     }
