@@ -27,7 +27,10 @@ jobs:
           command: mvn clean package -Pbuild-image
       - run:
           name: Docker Compose Up
-          command: docker compose up
+          command: docker compose up -d
+      - run:
+          name: Run Tests
+          command: mvn verify -Pintegration-tests
       - run:
           name: Docker Compose Down
           command: docker compose down
