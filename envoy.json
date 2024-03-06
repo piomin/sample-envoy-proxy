@@ -99,7 +99,7 @@
         "lb_type": "round_robin",
         "hosts": [
           {
-            "url": "tcp://localhost:9200"
+            "url": "tcp://envoy-discovery:8080"
           }
         ]
       },

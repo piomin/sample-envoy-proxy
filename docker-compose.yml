@@ -1,11 +1,5 @@
 version: '3'
 services:
-  envoy:
-    image: envoyproxy/envoy:dev
-    ports:
-      - "10000:10000"
-    volumes:
-      - ./envoy.json:/etc/envoy/envoy.json
   zipkin:
     container_name: zipkin
     image: openzipkin/zipkin
@@ -16,22 +10,28 @@ services:
     image: sample-envoy-proxy/envoy-discovery:1.1-SNAPSHOT
     ports:
       - "8080"
-    depends_on:
-      - envoy
     links:
-      - envoy
       - zipkin
     environment:
       SERVER_PORT: 8080
+  envoy:
+    image: envoyproxy/envoy:dev
+    ports:
+      - "10000:10000"
+      - "9901:9901"
+    volumes:
+      - ./envoy.json:/etc/envoy/envoy.json
+    depends_on:
+      - envoy-discovery
+    links:
+      - envoy-discovery
   person-service:
     image: sample-envoy-proxy/person-service:1.1-SNAPSHOT
     ports:
       - "8080"
     depends_on:
-      - envoy
       - envoy-discovery
     links:
-      - envoy
       - zipkin
       - envoy-discovery
     environment:
@@ -42,10 +42,8 @@ services:
     ports:
       - "8080"
     depends_on:
-      - envoy
       - envoy-discovery
     links:
-      - envoy
       - zipkin
       - envoy-discovery
     environment:
